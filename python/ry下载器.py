@@ -471,7 +471,7 @@ def main():
     except Exception:
         pass
 
-    sys.exit(0 if ok_n == len(results) else 2)
+    sys.exit(0 if ok_n > 0 else 2)
 
 
 if __name__ == "__main__":
