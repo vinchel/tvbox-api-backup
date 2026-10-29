@@ -40,13 +40,15 @@ jobs:
         run: pip install requests urllib3
 
       - name: 运行 ry下载器
+        continue-on-error: true
         run: |
           ARGS=""
           ${{ github.event.inputs.debug == 'true' && 'ARGS="$ARGS --debug"' || '' }}
           ${{ github.event.inputs.force == 'true' && 'ARGS="$ARGS --force"' || '' }}
-          python python/ry下载器.py $ARGS
+          python python/ry下载器.py $ARGS || echo "部分源失败，继续提交"
 
       - name: 提交产物
+        if: always()
         run: |
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
